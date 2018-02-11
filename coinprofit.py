@@ -41,6 +41,12 @@ def update_profit_trtl():
 	sats = (1 / float(data['network']['difficulty'])) * (float(data['network']['reward']) / float(data['config']['coinUnits']))
 	update_profit('trtl', sats, float(data['network']['difficulty']) / float(data['config']['coinDifficultyTarget']), float(data['network']['difficulty']), float(data['network']['reward']))
 
+def update_profit_xao():
+	response = requests.get("https://trtl.mine2gether.com/api/stats")
+	data = json.loads(response.text)
+	sats = (1 / float(data['network']['difficulty'])) * (float(data['network']['reward']) / float(data['config']['coinUnits']))
+	update_profit('xao', sats, float(data['network']['difficulty']) / float(data['config']['coinDifficultyTarget']), float(data['network']['difficulty']), float(data['network']['reward']))	
+
 def update_profit_dero():
 	response = requests.get("https://dero.miner.rocks/api/stats")
 	data = json.loads(response.text)
@@ -77,5 +83,6 @@ while True:
 	robust_call(update_profit_trtl)
 	robust_call(update_profit_dero)
 	robust_call(update_profit_krb)
+	robust_call(update_profit_xao)
 
 	time.sleep(60)
